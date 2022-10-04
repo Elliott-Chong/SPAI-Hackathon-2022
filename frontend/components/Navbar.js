@@ -46,7 +46,7 @@ function Navbar() {
           rel="stylesheet"
         />
       </Head>
-      <nav className="font-noteworthy flex-row sticky bg-white top-0 font-bold flex px-5 md:px-20 py-2 justify-between items-center">
+      <nav style={{height: '100px'}} className="font-noteworthy flex-row bg-white font-bold flex px-5 md:px-20 py-2 justify-between items-center">
         <Link href="/">
           <h1 className="md:text-3xl m-0 text-l cursor-pointer">
             A Unicorn's Treasure
@@ -56,6 +56,11 @@ function Navbar() {
           <Link href="/map">
             <a className="px-4 py-2 text-center bg-btn-green rounded-md shadow-md hover:shadow-lg cursor-pointer">
               Map
+            </a>
+          </Link>
+          <Link href="/camera">
+            <a className="px-4 py-2 text-center bg-btn-green rounded-md shadow-md hover:shadow-lg cursor-pointer">
+              Camera
             </a>
           </Link>
           {!state.user ? (
