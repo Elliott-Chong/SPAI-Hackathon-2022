@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST={"test.js -> react-webcam":{"id":"test.js -> react-webcam","files":["static/chunks/node_modules_react-webcam_dist_react-webcam_js.js"]}}

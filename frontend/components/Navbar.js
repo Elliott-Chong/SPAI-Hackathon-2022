@@ -9,6 +9,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { useGlobalContext } from "../context";
+import { UserCircleIcon, Squares2X2Icon } from "@heroicons/react/24/outline";
 
 function Navbar() {
   const { dispatch, state } = useGlobalContext();
@@ -34,62 +35,46 @@ function Navbar() {
   return (
     <div>
       <Head>
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css"
-        />
-        <title>A Unicorn's Treasure</title>
+        <title>A Unicorn&apos;s Treasure</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <script src="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js"></script>
-        <link
-          href="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css"
-          rel="stylesheet"
-        />
       </Head>
-      <nav className="font-noteworthy flex-row sticky bg-white top-0 font-bold flex px-5 md:px-20 py-2 justify-between items-center">
-        <Link href="/">
-          <h1 className="md:text-3xl m-0 text-l cursor-pointer">
-            A Unicorn's Treasure
+      <nav className="font-mono border-t-2 border-gray-600 fixed w-full bottom-0 flex justify-center gap-4 items-center px-2 py-4">
+        <Link href="/inventory">
+          <a className="btn nice-hover">
+            <Squares2X2Icon className="w-10 h-10" />
+          </a>
+        </Link>
+        <Link href="/" id="logo">
+          <h1 className="text-2xl nice-hover m-0 rounded-full cursor-pointer w-12 h-12 grid place-items-center border-4 border-gray-900">
+            S
           </h1>
         </Link>
-        <div className="md:ml-auto sm:m-0 flex-row flex gap-2">
-          <Link href="/map">
-            <a className="px-4 py-2 text-center bg-btn-green rounded-md shadow-md hover:shadow-lg cursor-pointer">
-              Map
+        {!state.user ? (
+          <>
+            <a
+              onClick={(e) => {
+                e.preventDefault();
+                signInWithGoogle();
+              }}
+              className="btn nice-hover"
+            >
+              <UserCircleIcon className="w-10 h-10" />
             </a>
-          </Link>
-          {!state.user ? (
-            <>
-              <a
-                onClick={(e) => {
-                  e.preventDefault();
-                  signInWithGoogle();
-                }}
-                className="px-4 py-2 text-center bg-btn-green rounded-md shadow-md hover:shadow-lg cursor-pointer"
-              >
-                Sign in
-              </a>
-            </>
-          ) : (
-            <>
-              <Link href="/game">
-                <a className="px-4 py-2 hidden md:inline text-center bg-btn-green rounded-md shadow-md hover:shadow-lg cursor-pointer">
-                  Game
-                </a>
-              </Link>
-              <a
-                onClick={(e) => {
-                  e.preventDefault();
-                  signOut(auth);
-                  dispatch({ type: "logout" });
-                }}
-                className="px-4 hidden md:inline py-2 text-center bg-btn-green rounded-md shadow-md hover:shadow-lg cursor-pointer"
-              >
-                Log out
-              </a>
-            </>
-          )}
-        </div>
+          </>
+        ) : (
+          <>
+            <a
+              onClick={(e) => {
+                e.preventDefault();
+                signOut(auth);
+                dispatch({ type: "logout" });
+              }}
+              className="btn nice-hover "
+            >
+              <UserCircleIcon className="w-10 h-10" />
+            </a>
+          </>
+        )}
       </nav>
     </div>
   );
