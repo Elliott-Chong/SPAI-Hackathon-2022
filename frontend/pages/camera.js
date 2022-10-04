@@ -16,11 +16,12 @@ export default function Camera() {
 
   return (
     <>
-      <main className="px-20 bg-light-green pt-5 h-75">
-        {state.user && (
+      {/* <Header/> */}
+      <main className="flex flex-col align-center" style={{height: "88vh"}}>
+        {/* {state.user && (
           <>
             <div className="flex items-center gap-4">
-              <h1 className="font-noteworthy text-xl font-bold">
+              <h1 className="font-poppinsMedium text-xl font-bold">
                 Logged in as:{" "}
                 <span className="font-normal">{state.user.displayName}</span>
               </h1>
@@ -32,18 +33,19 @@ export default function Camera() {
               />
             </div>
           </>
-        )}
+        )} */}
         <Webcam
           audio={false}
-          height={260}
-          className="mt-5"
+          // height={2000}
+          className="h-screen"
           screenshotFormat="image/jpeg"
+          forceScreenshotSourceSize={true}
           // width={1280}
           // videoConstraints={videoConstraints}
         >
           {({ getScreenshot }) => (
             <button
-              className="px-4 py-2 text-center mt-2 bg-btn-green rounded-md shadow-md hover:shadow-lg cursor-pointer"
+              className="rounded-full self-center m-5 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
               onClick={async () => {
                 if (!state.user) {
                   alert("Please sign in first!");
@@ -65,7 +67,9 @@ export default function Camera() {
                 setRectImg(response.data.image);
               }}
             >
-              Capture photo
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="60" fill="currentColor" className="bi bi-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+              </svg>
             </button>
           )}
         </Webcam>
