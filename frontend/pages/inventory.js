@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import { useGlobalContext } from "../context";
 
-const inventory = () => {
+const Inventory = () => {
   const { state } = useGlobalContext();
 
   const { inventory, treasured } = state;
@@ -40,4 +40,4 @@ const inventory = () => {
   );
 };
 
-export default inventory;
+export default Inventory;

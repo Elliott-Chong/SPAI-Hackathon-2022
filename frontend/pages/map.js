@@ -12,7 +12,7 @@ import data from "../data/stash.json";
 mapboxgl.accessToken =
   "pk.eyJ1IjoidWx0cmFyYXB0b3IiLCJhIjoiY2t0cGo5aThxMGFxMzJybXBiNmZ3bWY4eSJ9.q24IUWxYYm6DhTDn5pY2Rg";
 
-function map() {
+function Map() {
   const { state } = useGlobalContext();
   const { user } = state;
   const mapContainer = useRef(null);
@@ -224,4 +224,4 @@ function map() {
   );
 }
 
-export default map;
+export default Map;
