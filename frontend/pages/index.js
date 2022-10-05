@@ -1,6 +1,7 @@
 import React from "react";
 import { auth } from "../firebase";
 import { useGlobalContext } from "../context";
+import Header from "../components/Header";
 import {
   signInWithPopup,
   GoogleAuthProvider,
@@ -12,16 +13,17 @@ export default function Home() {
 
   React.useEffect(() => {
     if (state.user) window.location.href = "/map";
+    // if (state.user) console.log(state);
   }, [state.user]);
 
-  React.useEffect(() => {
-    let yes = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        dispatch({ type: "set_user", payload: user });
-      }
-    });
-    return yes;
-  }, []);
+  // React.useEffect(() => {
+  //   let yes = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       dispatch({ type: "set_user", payload: user });
+  //     }
+  //   });
+  //   return yes;
+  // }, []);
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();

@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Header from "../components/Header";
 import Image from "next/image";
 import React, { useRef, useEffect, useState } from "react";
 // import requestAnimationFrame from "react-map-gl";
@@ -162,9 +163,10 @@ function map() {
   }, [lat, lng]);
   return (
     <div>
+      <Header/>
       <Navbar />
       <div id="gameBody">
-        {user && (
+        {/* {user && (
           <div
             id="menu"
             className="absolute top-15 gap-6 left-0 z-40 py-4 px-8 flex flex-col h-screen bg-light-green"
@@ -219,7 +221,7 @@ function map() {
               </div>
             </div>
           </div>
-        )}
+        )} */}
         <div ref={mapContainer} className="map" />
       </div>
     </div>
