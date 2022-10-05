@@ -145,15 +145,11 @@ function map() {
       treasure.dataset.lng = points.lng;
       treasure.dataset.lat = points.lat;
       treasure.addEventListener("click", () => {
-        var pointDist = distance(
-          document.getElementById("playerChar").dataset.lat,
-          points.lat,
-          document.getElementById("playerChar").dataset.lng,
-          points.lng
-        );
-        if (pointDist <= 0.02) {
+        var pointDist = distance(lat, points.lat, lng, points.lng);
+        console.log(pointDist);
+        if (pointDist <= 0.05) {
+          console.log("near");
           // Make Game Here
-          window.location.href = "./game";
         }
       });
       new mapboxgl.Marker(treasure, { anchor: "bottom" })
@@ -163,7 +159,7 @@ function map() {
   }, [lat, lng]);
   return (
     <div>
-      <Header/>
+      <Header />
       <Navbar />
       <div id="gameBody">
         {/* {user && (

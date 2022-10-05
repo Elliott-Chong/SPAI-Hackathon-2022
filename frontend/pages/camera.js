@@ -1,23 +1,33 @@
 import Image from "next/image";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Header from "../components/Header";
 import { useGlobalContext } from "../context";
 import Webcam from "react-webcam";
+import { useRouter } from "next/router";
 
 export default function Camera() {
   const { state, dispatch } = useGlobalContext();
+  const [domLoaded, setDomLoaded] = useState(false);
   const videoConstraints = {
     width: 1280,
     height: 720,
     facingMode: "user",
   };
+  const [posting, setPosting] = useState(false);
   const [rectImg, setRectImg] = React.useState(null);
+  useEffect(() => {
+    setDomLoaded(true);
+  }, []);
+  const router = useRouter();
+
+  if (!domLoaded) return <></>;
 
   return (
     <>
-      {/* <Header/> */}
-      <main className="flex flex-col align-center" style={{height: "88vh"}}>
+      <Header />
+      <main className="flex flex-col align-center" style={{ height: "88vh" }}>
         {/* {state.user && (
           <>
             <div className="flex items-center gap-4">
@@ -51,29 +61,50 @@ export default function Camera() {
                   alert("Please sign in first!");
                   return;
                 }
+                setPosting(true);
                 const imageSrc = getScreenshot();
-                const body = JSON.stringify({ file: imageSrc });
+                const body = JSON.stringify(imageSrc);
                 const config = {
                   headers: { "Content-Type": "application/json" },
                 };
                 console.log("POSTING...");
+
                 const response = await axios.post(
-                  "http://localhost:5000",
+                  "http://192.168.50.35:8000/api/upload",
                   body,
                   config
                 );
-                console.log(response.data);
-                dispatch({ type: "update_inventory", payload: response.data });
-                setRectImg(response.data.image);
+                dispatch({
+                  type: "update_inventory",
+                  payload: JSON.parse(response.data).prediction[0],
+                });
+                setPosting(false);
+                router.push("/inventory");
               }}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="60" fill="currentColor" className="bi bi-circle" viewBox="0 0 16 16">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="60"
+                fill="currentColor"
+                className="bi bi-circle"
+                viewBox="0 0 16 16"
+              >
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
               </svg>
             </button>
           )}
         </Webcam>
         {rectImg && <img src={rectImg} />}
+        {posting && (
+          <>
+            <div className="z-10 absolute inset-0 flex items-center justify-center bg-black/80">
+              <h1 className="font-poppinsMedium font-bold text-2xl text-white">
+                Identifying...
+              </h1>
+            </div>
+          </>
+        )}
       </main>
       <Navbar />
     </>
