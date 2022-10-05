@@ -2,19 +2,20 @@ import Head from "next/head";
 import Header from "../components/Header";
 import Image from "next/image";
 import React, { useRef, useEffect, useState } from "react";
+import Confetti from "react-confetti";
 // import requestAnimationFrame from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "!mapbox-gl"; // or "const mapboxgl = require('mapbox-gl');"
 import { useGlobalContext } from "../context";
 import Navbar from "../components/Navbar";
 import data from "../data/stash.json";
+import Link from "next/link";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoidWx0cmFyYXB0b3IiLCJhIjoiY2t0cGo5aThxMGFxMzJybXBiNmZ3bWY4eSJ9.q24IUWxYYm6DhTDn5pY2Rg";
 
 function Map() {
-  const { state } = useGlobalContext();
-  const { user } = state;
+  const { state, dispatch } = useGlobalContext();
   const mapContainer = useRef(null);
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
@@ -22,8 +23,13 @@ function Map() {
   const [pitch, setPitch] = useState(50);
   const [bearing, setBearing] = useState(0);
   const [timestamp, setTimeStamp] = useState(0);
+  const [showcon, setShowcon] = useState(false);
   const [maxPitch, setMaxPitch] = useState(65);
   const [minPitch, setMinPitch] = useState(35);
+  const [size, setSize] = React.useState({ height: 0, width: 0 });
+  useEffect(() => {
+    setSize({ height: window.innerHeight, width: window.innerWidth });
+  }, []);
   useEffect(() => {
     const location = window.navigator && window.navigator.geolocation;
 
@@ -146,10 +152,10 @@ function Map() {
       treasure.dataset.lat = points.lat;
       treasure.addEventListener("click", () => {
         var pointDist = distance(lat, points.lat, lng, points.lng);
-        console.log(pointDist);
         if (pointDist <= 0.05) {
           console.log("near");
-          // Make Game Here
+          setShowcon(true);
+          dispatch({ type: "deposit_inventory" });
         }
       });
       new mapboxgl.Marker(treasure, { anchor: "bottom" })
@@ -161,6 +167,19 @@ function Map() {
     <div>
       <Header />
       <Navbar />
+      {showcon && <Confetti width={size.width} height={size.height} />}
+      {showcon && (
+        <div className="font-poppinsMedium text-center absolute justify-center flex flex-col gap-2 z-[10000] w-[80vw] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-green-500 shadow-lg rounded-lg p-6">
+          <h1 className="font-bold text-2xl">
+            Yay! You have successfully recycled your items!
+          </h1>
+          <Link href="/leaderboard">
+            <button className="py-2 px-4 self-center mt-4 font-bold rounded-md bg-green-200 hover:bg-green-800 transition hover:text-white shadow-lg">
+              View Leaderboard
+            </button>
+          </Link>
+        </div>
+      )}
       <div id="gameBody">
         {/* {user && (
           <div

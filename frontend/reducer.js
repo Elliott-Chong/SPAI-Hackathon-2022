@@ -1,7 +1,7 @@
 const initialState = {
   user: null,
-  treasured: { shirt: 1 },
-  inventory: { bottle: 3 },
+  treasured: {},
+  inventory: {},
 };
 
 const reducer = (state, action) => {
@@ -33,6 +33,16 @@ const reducer = (state, action) => {
       } else {
         return { ...state, inventory: { ...state.inventory, [payload]: 1 } };
       }
+    case "deposit_inventory":
+      let new_treasured = state.treasured;
+      for (let key in state.inventory) {
+        if (new_treasured.hasOwnProperty(key)) {
+          new_treasured[key] += state.inventory[key];
+        } else {
+          new_treasured[key] = state.inventory[key];
+        }
+      }
+      return { ...state, inventory: {}, treasured: new_treasured };
 
     default:
       return state;
