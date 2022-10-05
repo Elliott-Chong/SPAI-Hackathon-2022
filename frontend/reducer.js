@@ -1,7 +1,7 @@
 const initialState = {
   user: null,
-  treasured: [],
-  inventory: [],
+  treasured: { shirt: 1 },
+  inventory: { bottle: 3 },
 };
 
 const reducer = (state, action) => {
@@ -20,24 +20,20 @@ const reducer = (state, action) => {
     case "logout":
       return { ...state, user: null };
     case "update_inventory":
-      const { Class_names_identified } = payload;
-
-      // [shirt, bottle, bottle]
-      // items = [{name: shirt, count: 1}, {name: bottle, count: 2}]
-      let items = [];
-      for (let item of Class_names_identified) {
-        if (items.some((i) => i.name == item)) {
-          for (let i of items) {
-            if (i.name == item) {
-              i.count++;
-            }
-          }
-        } else {
-          items.push({ name: item, count: 1 });
-        }
+      // payload = 'bottle'
+      // inventory = {'sunglasses': 2}
+      if (state.inventory.hasOwnProperty(payload)) {
+        return {
+          ...state,
+          inventory: {
+            ...state.inventory,
+            [payload]: state.inventory[payload] + 1,
+          },
+        };
+      } else {
+        return { ...state, inventory: { ...state.inventory, [payload]: 1 } };
       }
 
-      return { ...state, inventory: items };
     default:
       return state;
   }

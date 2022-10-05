@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Header from "../components/Header";
 import Image from "next/image";
 import React, { useRef, useEffect, useState } from "react";
 // import requestAnimationFrame from "react-map-gl";
@@ -11,7 +12,7 @@ import data from "../data/stash.json";
 mapboxgl.accessToken =
   "pk.eyJ1IjoidWx0cmFyYXB0b3IiLCJhIjoiY2t0cGo5aThxMGFxMzJybXBiNmZ3bWY4eSJ9.q24IUWxYYm6DhTDn5pY2Rg";
 
-function map() {
+function Map() {
   const { state } = useGlobalContext();
   const { user } = state;
   const mapContainer = useRef(null);
@@ -144,15 +145,11 @@ function map() {
       treasure.dataset.lng = points.lng;
       treasure.dataset.lat = points.lat;
       treasure.addEventListener("click", () => {
-        var pointDist = distance(
-          document.getElementById("playerChar").dataset.lat,
-          points.lat,
-          document.getElementById("playerChar").dataset.lng,
-          points.lng
-        );
-        if (pointDist <= 0.02) {
+        var pointDist = distance(lat, points.lat, lng, points.lng);
+        console.log(pointDist);
+        if (pointDist <= 0.05) {
+          console.log("near");
           // Make Game Here
-          window.location.href = "./game";
         }
       });
       new mapboxgl.Marker(treasure, { anchor: "bottom" })
@@ -162,9 +159,10 @@ function map() {
   }, [lat, lng]);
   return (
     <div>
+      <Header />
       <Navbar />
       <div id="gameBody">
-        {user && (
+        {/* {user && (
           <div
             id="menu"
             className="absolute top-15 gap-6 left-0 z-40 py-4 px-8 flex flex-col h-screen bg-light-green"
@@ -219,11 +217,11 @@ function map() {
               </div>
             </div>
           </div>
-        )}
+        )} */}
         <div ref={mapContainer} className="map" />
       </div>
     </div>
   );
 }
 
-export default map;
+export default Map;
