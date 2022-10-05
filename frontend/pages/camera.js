@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import { useGlobalContext } from "../context";
 import Webcam from "react-webcam";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function Camera() {
   const { state, dispatch } = useGlobalContext();
@@ -16,11 +17,13 @@ export default function Camera() {
     facingMode: "user",
   };
   const [posting, setPosting] = useState(false);
+  const [popup, setPopup] = useState(false);
   const [rectImg, setRectImg] = React.useState(null);
+  const router = useRouter();
+  const [item, setItem] = React.useState();
   useEffect(() => {
     setDomLoaded(true);
   }, []);
-  const router = useRouter();
 
   if (!domLoaded) return <></>;
 
@@ -63,6 +66,7 @@ export default function Camera() {
                 }
                 setPosting(true);
                 const imageSrc = getScreenshot();
+                setRectImg(imageSrc);
                 const body = JSON.stringify(imageSrc);
                 const config = {
                   headers: { "Content-Type": "application/json" },
@@ -70,7 +74,7 @@ export default function Camera() {
                 console.log("POSTING...");
 
                 const response = await axios.post(
-                  "http://192.168.50.35:8000/api/upload",
+                  "http://192.168.50.74:8000/api/upload",
                   body,
                   config
                 );
@@ -78,8 +82,9 @@ export default function Camera() {
                   type: "update_inventory",
                   payload: JSON.parse(response.data).prediction[0],
                 });
+                setItem(JSON.parse(response.data).prediction[0]);
                 setPosting(false);
-                router.push("/inventory");
+                setPopup(true);
               }}
             >
               <svg
@@ -95,13 +100,42 @@ export default function Camera() {
             </button>
           )}
         </Webcam>
-        {rectImg && <img src={rectImg} />}
         {posting && (
           <>
             <div className="z-10 absolute inset-0 flex items-center justify-center bg-black/80">
               <h1 className="font-poppinsMedium font-bold text-2xl text-white">
                 Identifying...
               </h1>
+            </div>
+          </>
+        )}
+        {popup && (
+          <>
+            <div className="z-10 absolute top w-[80vw] top-1/2 flex flex-col gap-4 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-green-600 p-6 font-poppinsMedium rounded-lg">
+              <h1 className="text-center font-bold text-2xl">Plastic bottle</h1>
+              <img src={rectImg} alt="img" className="rounded-lg" />
+              <p>
+                Recyclable: <span className="font-bold">Yes</span>
+              </p>
+              <p>
+                Fun fact:{" "}
+                <span className="font-bold">
+                  Recycled bottles use 75% less energy to produce than new ones
+                </span>
+              </p>
+              <div className="flex mx-auto items-center mt-auto">
+                <Link href="/inventory">
+                  <button className="py-2 px-4 rounded-md bg-green-200 hover:bg-green-800 transition hover:text-white shadow-lg">
+                    Add to inventory
+                  </button>
+                </Link>
+
+                <Link href="/map">
+                  <span className="underline cursor-pointer ml-4">
+                    Visit map
+                  </span>
+                </Link>
+              </div>
             </div>
           </>
         )}
