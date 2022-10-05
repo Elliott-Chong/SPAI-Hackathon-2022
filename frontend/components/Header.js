@@ -19,9 +19,10 @@ const Header = () => {
     let yes = onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch({ type: "set_user", payload: user });
-      } else {
-        window.location.href = "/";
       }
+      //  else {
+      //   window.location.href = "/";
+      // }
     });
     return yes;
   }, [dispatch]);
