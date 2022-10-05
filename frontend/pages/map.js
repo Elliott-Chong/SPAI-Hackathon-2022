@@ -77,10 +77,10 @@ function map() {
           "sky-atmosphere-sun-intensity": 15,
         },
       });
-      map["scrollZoom"].disable();
-      map["dragPan"].disable();
-      map["doubleClickZoom"].disable();
-      map["boxZoom"].disable();
+      // map["scrollZoom"].disable();
+      // map["dragPan"].disable();
+      // map["doubleClickZoom"].disable();
+      // map["boxZoom"].disable();
     });
 
     const player = document.createElement("div");

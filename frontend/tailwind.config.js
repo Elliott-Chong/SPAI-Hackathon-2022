@@ -10,6 +10,7 @@ module.exports = {
         noteworthy: ["noteworthy", "monospace"],
         mono: ["Space Mono", "monospace"],
         sans: ["DM Sans", "sans-serif"],
+        poppinsMedium: ['poppins-medium', 'sans-serif']
       },
       colors: {
         "light-green": "#ACBC8A",
