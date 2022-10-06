@@ -177,14 +177,14 @@ const MapPage = () => {
           position.lng,
           points.lng
         );
-        if (pointDist <= 0.2) {
-          if (user.inventory.length === 0) {
-            window.alert("You do not have anything to recycle!");
-            return;
-          }
-          treasureItems();
-          setShowcon(true);
+        // if (pointDist <= 0.2) {
+        if (user.inventory.length === 0) {
+          window.alert("You do not have anything to recycle!");
+          return;
         }
+        treasureItems();
+        setShowcon(true);
+        // }
       });
       new mapboxgl.Marker(treasure, { anchor: "bottom" })
         .setLngLat([points.lng, points.lat])
