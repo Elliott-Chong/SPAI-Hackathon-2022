@@ -3,6 +3,8 @@ import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import { useGlobalContext } from "../context";
 
+
+
 const Inventory = () => {
   const { state } = useGlobalContext();
 
@@ -12,7 +14,7 @@ const Inventory = () => {
     <>
       <Header />
       <Navbar />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-poppinsMedium flex flex-col gap-4">
+      <div>
         <div>
           <h1 className="text-2xl font-bold">Inventory</h1>
           {Object.keys(inventory).map((item, idx) => {
@@ -36,6 +38,7 @@ const Inventory = () => {
           })}
         </div>
       </div>
+   
     </>
   );
 };

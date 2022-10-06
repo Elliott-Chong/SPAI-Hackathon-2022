@@ -2,6 +2,7 @@ import React from "react";
 import { auth } from "../firebase";
 import { useGlobalContext } from "../context";
 import Header from "../components/Header";
+
 import {
   signInWithPopup,
   GoogleAuthProvider,
