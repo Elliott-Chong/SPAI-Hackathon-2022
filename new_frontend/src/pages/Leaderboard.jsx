@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-const data = [
-  { name: "Timothy", score: 45 },
-  { name: "Elliott", score: 23 },
-  { name: "Zhen Yang", score: 14 },
-];
 
 const Leaderboard = () => {
   const [users, setUsers] = useState([]);

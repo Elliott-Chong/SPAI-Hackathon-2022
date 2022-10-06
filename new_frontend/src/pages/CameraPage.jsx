@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Webcam from "react-webcam";
-import { useGlobalContext } from "../context";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
@@ -10,7 +9,6 @@ const CameraPage = () => {
   const [rectImg, setRectImg] = useState();
   const [item, setItem] = useState();
   const [popup, setPopup] = useState(false);
-  // const { dispatch } = useGlobalContext();
 
   const handleCapture = async (getScreenshot) => {
     setPosting(true);
