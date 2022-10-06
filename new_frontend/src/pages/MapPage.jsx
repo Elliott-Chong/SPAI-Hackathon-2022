@@ -179,7 +179,7 @@ const MapPage = () => {
         );
         // if (pointDist <= 0.2) {
         if (user.inventory.length === 0) {
-          window.alert("You do not have anything to recycle!");
+          window.alert("You do not have anything to throw!");
           return;
         }
         treasureItems();

@@ -33,7 +33,7 @@ const Leaderboard = () => {
                     scope="col"
                     className="text-xl font-medium text-white px-6 py-4 text-left"
                   >
-                    Recycled
+                    Treasured
                   </th>
                 </tr>
               </thead>
