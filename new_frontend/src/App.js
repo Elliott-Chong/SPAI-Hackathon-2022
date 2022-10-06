@@ -10,6 +10,7 @@ import Header from "./components/Header";
 import MapPage from "./pages/MapPage";
 import InventoryPage from "./pages/InventoryPage";
 import CameraPage from "./pages/CameraPage";
+import Leaderboard from "./pages/Leaderboard";
 
 function App() {
   const location = useLocation();
@@ -37,6 +38,7 @@ function App() {
           <PrivateRoute component={MapPage} exact path="/" />
           <PrivateRoute component={InventoryPage} exact path="/inventory" />
           <PrivateRoute component={CameraPage} exact path="/camera" />
+          <PrivateRoute component={Leaderboard} exact path="/leaderboard" />
         </Switch>
       </main>
       <ToastContainer

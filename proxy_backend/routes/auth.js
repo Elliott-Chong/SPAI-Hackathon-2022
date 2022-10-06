@@ -2,9 +2,9 @@ const router = require("express").Router();
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const axios = require("axios");
 const auth = require("../auth_middleware.js");
 const { body, validationResult } = require("express-validator");
+const { produce } = require("immer");
 
 router.post(
   "/register",
@@ -91,6 +91,41 @@ router.post("/google", async (req, res) => {
       }
       return res.json({ token });
     });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+// http://localhost:5000/api/auth/all
+router.get("/all", async (req, res) => {
+  try {
+    const users = await User.find();
+    return res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+router.post("/add-inventory", auth, async (req, res) => {
+  try {
+    const { item } = req.body;
+    // [{name: 'hammer', count: 2}, {name: 'labcoat', count: 3}]
+    let new_inventory = produce(req.user.inventory, (draft) => {
+      let found = false;
+      for (let current of draft) {
+        if (current.name == item) {
+          current.count += 1;
+          found = true;
+        }
+      }
+      if (!found) {
+        draft.push({ name: item, count: 1 });
+      }
+    });
+
+    req.user.inventory = new_inventory;
+    req.user.save();
+    return res.status(200).send("nice");
   } catch (error) {
     console.error(error);
   }
