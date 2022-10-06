@@ -104,7 +104,7 @@ function Map() {
         (position) => {
           player.dataset.lng = position.coords.longitude;
           player.dataset.lat = position.coords.latitude;
-          const marker = new mapboxgl.Marker(player, { anchor: "bottom" })
+          new mapboxgl.Marker(player, { anchor: "bottom" })
             .setLngLat([position.coords.longitude, position.coords.latitude])
             .addTo(map);
         },

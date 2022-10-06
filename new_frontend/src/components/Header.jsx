@@ -1,12 +1,13 @@
 import React from "react";
 import { useGlobalContext } from "../context";
+import { ArrowLeftOnRectangleIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 
 const Header = () => {
   const { state, dispatch } = useGlobalContext();
   const { user } = state;
   return (
-    <nav className="absolute top-100 right-0 left-0 bg-green-600 flex items-center justify-between px-4 py-2 z-10">
+    <nav className="absolute top-100 right-0 left-0 bg-green-600 flex items-center justify-between px-7 py-4 z-10">
       {user ? (
         <img
           className="rounded-full h-[40px] w-[40px]"
@@ -26,7 +27,7 @@ const Header = () => {
           <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
         </svg>
       )}
-      <Link to="/leaderboard" className="font-poppins text-4xl font-bold">
+      <Link to="/" className="cursor-pointer text-4xl font-bold">
         Trash Go
       </Link>
       <span
@@ -36,23 +37,7 @@ const Header = () => {
           dispatch({ type: "CLEAR_USER" });
         }}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="40"
-          height="40"
-          fill="currentColor"
-          className="bi bi-box-arrow-right"
-          viewBox="0 0 16 16"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"
-          />
-          <path
-            fillRule="evenodd"
-            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
-          />
-        </svg>
+        <ArrowLeftOnRectangleIcon className="w-10 h-10" />
       </span>
     </nav>
   );

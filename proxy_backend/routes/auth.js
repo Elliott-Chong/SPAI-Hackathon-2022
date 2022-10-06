@@ -106,6 +106,36 @@ router.get("/all", async (req, res) => {
   }
 });
 
+router.get("/treasure-items", auth, async (req, res) => {
+  try {
+    const user = req.user;
+    // inventory = [{name: 'hammer', count: 2}, {name: 'labcoat', count: 3}]
+    // treasured = [{name: 'hammer', count: 1}]
+
+    // [{name: 'hammer', count: 3}, {name: 'labcoat', count: 3}]
+    for (let item of user.inventory) {
+      // {name: 'hammer', count: 2}
+      let found = false;
+      for (let treasured_item of user.treasured) {
+        if (treasured_item.name == item.name) {
+          treasured_item.count += item.count;
+          found = true;
+        }
+        if (found) break;
+      }
+      if (!found) {
+        user.treasured.push(item);
+      }
+    }
+    user.inventory = [];
+    user.points = user.treasured.reduce((ps, a) => ps + a.count, 0);
+    user.save();
+    return res.status(200).send("ok");
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 router.post("/add-inventory", auth, async (req, res) => {
   try {
     const { item } = req.body;
