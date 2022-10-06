@@ -9,7 +9,7 @@ const Header = () => {
       {user ? (
         <img
           className="rounded-full h-[40px] w-[40px]"
-          src={user?.photoURL}
+          src={user?.photo}
           alt="user"
         />
       ) : (

@@ -1,10 +1,11 @@
 import React from "react";
 import { auth } from "../firebase";
-import { useGlobalContext } from "../context";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 export default function LoginPage() {
-  const { dispatch } = useGlobalContext();
+  const history = useHistory();
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -16,7 +17,13 @@ export default function LoginPage() {
         email: user.email,
         photo: user.photoURL,
       };
-      dispatch({ type: "SET_USER", payload: user });
+      const config = {
+        headers: { "Content-Type": "application/json" },
+      };
+      const body = JSON.stringify(user);
+      const auth_response = await axios.post("/api/auth/google", body, config);
+      localStorage.setItem("token", auth_response.data.token);
+      history.push("/");
     } catch (error) {
       console.log(error);
     }

@@ -8,6 +8,8 @@ import Navbar from "./components/Navbar";
 import LoginPage from "./pages/LoginPage";
 import Header from "./components/Header";
 import MapPage from "./pages/MapPage";
+import InventoryPage from "./pages/InventoryPage";
+import CameraPage from "./pages/CameraPage";
 
 function App() {
   const location = useLocation();
@@ -30,13 +32,11 @@ function App() {
       <main id="main-container">
         <Switch>
           <Route exact path={"/login"}>
-            {is_authenticated && !loading ? (
-              <Redirect to="/map" />
-            ) : (
-              <LoginPage />
-            )}
+            {is_authenticated && !loading ? <Redirect to="/" /> : <LoginPage />}
           </Route>
           <PrivateRoute component={MapPage} exact path="/" />
+          <PrivateRoute component={InventoryPage} exact path="/inventory" />
+          <PrivateRoute component={CameraPage} exact path="/camera" />
         </Switch>
       </main>
       <ToastContainer

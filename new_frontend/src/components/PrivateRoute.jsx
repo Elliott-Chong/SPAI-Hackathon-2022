@@ -6,15 +6,12 @@ const PrivateRoute = ({ component: Component }, ...props) => {
   const {
     state: { is_authenticated, loading },
   } = useGlobalContext();
+  if (loading) return <></>;
   return (
     <Route
       {...props}
       render={(props) =>
-        !is_authenticated && !loading ? (
-          <Redirect to="/login" />
-        ) : (
-          <Component {...props} />
-        )
+        !is_authenticated ? <Redirect to="/login" /> : <Component {...props} />
       }
     />
   );
