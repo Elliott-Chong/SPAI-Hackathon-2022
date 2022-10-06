@@ -56,16 +56,36 @@ const MapPage = () => {
 
   React.useEffect(() => {
     const location = window.navigator && window.navigator.geolocation;
-    let position = { lat: 0, lng: 0 };
+    let position = { lat: 1.311361, lng: 103.7759 };
 
     if (location) {
-      location.getCurrentPosition(
-        (pos) => {
+      // location.getCurrentPosition(
+      //   (pos) => {
+      //     console.log(pos.coords);
+      //     position.lat = pos.coords.latitude;
+      //     position.lng = pos.coords.longitude;
+      //   },
+      //   (error) => {
+      //     console.log(error);
+      //   }
+      // );
+      navigator.geolocation.getCurrentPosition(
+        function () {},
+        function () {},
+        {}
+      );
+      //The working next statement.
+      navigator.geolocation.getCurrentPosition(
+        function (pos) {
+          //Your code here
           position.lat = pos.coords.latitude;
           position.lng = pos.coords.longitude;
         },
-        (error) => {
-          console.log(error);
+        function (e) {
+          //Your error handling here
+        },
+        {
+          enableHighAccuracy: true,
         }
       );
     }
@@ -119,20 +139,24 @@ const MapPage = () => {
     player.style.aspectRatio = `3/4`;
     player.style.backgroundSize = `100%`;
     player.style.zIndex = `99`;
-    if (location) {
-      location.getCurrentPosition(
-        (position) => {
-          player.dataset.lng = position.lng;
-          player.dataset.lat = position.lat;
-          new mapboxgl.Marker(player, { anchor: "bottom" })
-            .setLngLat([position.coords.longitude, position.coords.latitude])
-            .addTo(map);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
+    // if (location) {
+    //   location.getCurrentPosition(
+    //     (position) => {
+    //       player.dataset.lng = position.lng;
+    //       player.dataset.lat = position.lat;
+    //       new mapboxgl.Marker(player, { anchor: "bottom" })
+    //         .setLngLat([position.coords.longitude, position.coords.latitude])
+    //         .addTo(map);
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //     },
+    //     { timeout: 10000 }
+    //   );
+    // }
+    new mapboxgl.Marker(player, { anchor: "bottom" })
+      .setLngLat([position.lng, position.lat])
+      .addTo(map);
 
     for (var points of data) {
       const treasure = document.createElement("div");
