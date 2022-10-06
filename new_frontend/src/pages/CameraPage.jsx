@@ -47,7 +47,10 @@ const CameraPage = () => {
           audio={false}
           screenshotFormat="image/jpeg"
           // height={window.innerHeight}
-          videoConstraints={{ facingMode: { exact: "environment" } }}
+          videoConstraints={{
+            facingMode:
+              window.innerWidth < 600 ? { exact: "environment" } : "user",
+          }}
           width={window.innerWidth * 0.8}
           className="z-[9990]"
         >
@@ -74,16 +77,7 @@ const CameraPage = () => {
             <div className="z-[9999] absolute top max-h-[70vh] w-[80vw] top-1/2 flex flex-col gap-4 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-green-600 p-6 font-poppinsMedium rounded-lg">
               <h1 className="text-center font-bold text-2xl">{item}</h1>
               <img src={rectImg} alt="img" className="rounded-lg" />
-              <p>
-                Recyclable: <span className="font-bold">Yes</span>
-              </p>
-              <p>
-                Fun fact:{" "}
-                <span className="font-bold">
-                  Recycled bottles use 75% less energy to produce than new ones
-                </span>
-              </p>
-              <div className="flex items-center gap-4 mt-auto">
+              <div className="flex items-center gap-4 mt-auto max-h-[25vh]">
                 <button
                   onClick={handleAdd}
                   className="py-2 px-4 rounded-md bg-green-200 hover:bg-green-800 transition hover:text-white shadow-lg"
