@@ -46,11 +46,14 @@ const CameraPage = () => {
         <Webcam
           audio={false}
           screenshotFormat="image/jpeg"
-          height={window.innerHeight * 0.6}
+          height={window.innerHeight}
+          videoConstraints={{ facingMode: { exact: "environment" } }}
+          width={window.innerWidth}
+          className="z-[9990]"
         >
           {({ getScreenshot }) => (
             <button
-              className="rounded-full self-center m-5 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+              className="rounded-full z-[9999] self-center m-5 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
               onClick={() => handleCapture(getScreenshot)}
             >
               <svg
