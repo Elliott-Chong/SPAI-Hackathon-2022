@@ -76,8 +76,12 @@ const CameraPage = () => {
           <>
             <div className="z-[9999] absolute top max-h-[70vh] w-[80vw] top-1/2 flex flex-col gap-4 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-green-600 p-6 font-poppinsMedium rounded-lg">
               <h1 className="text-center font-bold text-2xl">{item}</h1>
-              <img src={rectImg} alt="img" className="rounded-lg" />
-              <div className="flex items-center gap-4 mt-auto max-h-[25vh]">
+              <img
+                src={rectImg}
+                alt="img"
+                className="rounded-lg max-h-[25vh]"
+              />
+              <div className="flex items-center gap-4 mt-auto">
                 <button
                   onClick={handleAdd}
                   className="py-2 px-4 rounded-md bg-green-200 hover:bg-green-800 transition hover:text-white shadow-lg"
