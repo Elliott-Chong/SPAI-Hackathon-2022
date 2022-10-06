@@ -5,7 +5,7 @@ const axios = require("axios");
 
 const app = express();
 
-const PORT = 5000;
+const PORT = 5050;
 
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
@@ -24,7 +24,7 @@ app.post("/api/upload", async (req, res) => {
 
     const body = req.body.img;
     const response = await axios.post(
-      "http://localhost:8000/api/upload",
+      "http://192.168.50.74:8000/api/upload",
       body,
       config
     );

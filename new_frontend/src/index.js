@@ -5,7 +5,7 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import AppContext from "./context";
 import axios from "axios";
-axios.defaults.baseURL = "http://trashgo.elliottchong.com:5000";
+axios.defaults.baseURL = "https://trashgo.elliottchong.com";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
