@@ -1,11 +1,15 @@
 import React, { useRef } from "react";
 import axios from "axios";
 import "mapbox-gl/dist/mapbox-gl.css";
-import mapboxgl from "mapbox-gl"; // or "const mapboxgl = require('mapbox-gl');"
 import data from "../data/stash.json";
 import Confetti from "react-confetti";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../context";
+import mapboxgl from "mapbox-gl"; // or "const mapboxgl = require('mapbox-gl');"
+// eslint-disable-next-line import/no-webpack-loader-syntax
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import MapboxWorker from "worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker";
+mapboxgl.workerClass = MapboxWorker;
 
 function distance(lat1, lat2, lon1, lon2) {
   // The math module contains a function
