@@ -17,6 +17,10 @@
 @tailwind utilities;
 
 @layer components {
+  video {
+    max-width: 100000px !important;
+  }
+
   body {
     @apply font-poppins;
   }

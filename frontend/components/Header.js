@@ -28,7 +28,7 @@ const Header = () => {
   }, [dispatch]);
 
   return (
-    <nav className="absolute top-100 right-0 left-0 bg-green-600 flex items-center justify-between px-4 py-2 z-10">
+    <nav className="absolute right-0 left-0 bg-green-600 flex items-center justify-between px-4 py-2 z-10">
       {user ? (
         <Image
           width={40}

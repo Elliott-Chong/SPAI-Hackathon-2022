@@ -22,7 +22,7 @@ app.post("/api/upload", async (req, res) => {
       headers: { "Content-Type": "application/json" },
     };
 
-    const body = req.body.imageSrc;
+    const body = req.body.img;
     const response = await axios.post(
       "http://localhost:8000/api/upload",
       body,
@@ -33,7 +33,7 @@ app.post("/api/upload", async (req, res) => {
     console.error(error);
   }
 });
-// app.use("/api/auth", require("./routes/auth"));
+app.use("/api/auth", require("./routes/auth.js"));
 
 app.listen(PORT || process.env.PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
