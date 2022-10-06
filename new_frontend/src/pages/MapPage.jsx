@@ -153,7 +153,7 @@ const MapPage = () => {
           position.lng,
           points.lng
         );
-        if (pointDist <= 0.05) {
+        if (pointDist <= 0.2) {
           if (user.inventory.length === 0) {
             window.alert("You do not have anything to recycle!");
             return;
