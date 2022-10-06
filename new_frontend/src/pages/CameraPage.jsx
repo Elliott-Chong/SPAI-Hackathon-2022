@@ -46,7 +46,7 @@ const CameraPage = () => {
         <Webcam
           audio={false}
           screenshotFormat="image/jpeg"
-          width={window.innerWidth}
+          height={window.innerHeight * 0.6}
         >
           {({ getScreenshot }) => (
             <button
