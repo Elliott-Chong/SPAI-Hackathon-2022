@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import Webcam from "react-webcam";
 import { useGlobalContext } from "../context";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const CameraPage = () => {
   const [posting, setPosting] = useState(false);
-  const { dispatch } = useGlobalContext();
+  const [rectImg, setRectImg] = useState();
+  const [item, setItem] = useState();
+  const [popup, setPopup] = useState(false);
+  // const { dispatch } = useGlobalContext();
 
   const handleCapture = async (getScreenshot) => {
     setPosting(true);
     const imageSrc = getScreenshot();
-    // setRectImg(imageSrc);
+    setRectImg(imageSrc);
     const body = JSON.stringify({ img: imageSrc });
     const config = {
       headers: { "Content-Type": "application/json" },
@@ -21,7 +25,7 @@ const CameraPage = () => {
     console.log(response.data);
     setItem(response.data.prediction[0]);
     setPosting(false);
-    // setPopup(true);
+    setPopup(true);
   };
 
   return (
@@ -53,6 +57,39 @@ const CameraPage = () => {
         <>
           <div className="z-10 absolute inset-0 flex items-center justify-center bg-black/80">
             <h1 className="font-bold text-2xl text-white">Identifying...</h1>
+          </div>
+        </>
+      )}
+      {popup && (
+        <>
+          <div className="z-10 absolute top w-[80vw] top-1/2 flex flex-col gap-4 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-green-600 p-6 font-poppinsMedium rounded-lg">
+            <h1 className="text-center font-bold text-2xl">{item}</h1>
+            <img src={rectImg} alt="img" className="rounded-lg" />
+            <p>
+              Recyclable: <span className="font-bold">Yes</span>
+            </p>
+            <p>
+              Fun fact:{" "}
+              <span className="font-bold">
+                Recycled bottles use 75% less energy to produce than new ones
+              </span>
+            </p>
+            <div className="flex items-center gap-4 mt-auto">
+              <Link to="/inventory">
+                <button className="py-2 px-4 rounded-md bg-green-200 hover:bg-green-800 transition hover:text-white shadow-lg">
+                  Add to inventory
+                </button>
+              </Link>
+
+              <span
+                onClick={() => {
+                  setPopup(false);
+                }}
+                className="underline cursor-pointer"
+              >
+                Cancel
+              </span>
+            </div>
           </div>
         </>
       )}
